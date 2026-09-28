@@ -43,10 +43,12 @@ class PasoDecision(db.Model):
         db.Text
     )
 
-    escalamiento = db.Column(
+    escalar_si = db.Column(
         db.Boolean,
         default=False
     )
 
-    def __repr__(self):
-        return f"<PasoDecision {self.id}>"
+    escalar_no = db.Column(
+        db.Boolean,
+        default=False
+    )
