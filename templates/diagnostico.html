@@ -16,12 +16,12 @@ Diagnóstico | Mesa de Ayuda TI
         </span>
 
         <h1>
-            Vamos a identificar el problema
+            Identificación de incidencia
         </h1>
 
         <p>
-            Responde cada pregunta para que el
-            sistema determine el procedimiento adecuado.
+            Responde las preguntas para determinar
+            la posible solución.
         </p>
 
     </div>
@@ -61,22 +61,17 @@ Diagnóstico | Mesa de Ayuda TI
             {{ paso.id }}
         </div>
 
-        <div class="question-content">
+        <span class="category">
+            {{ paso.categoria }}
+        </span>
 
-            <span>
-                {{ paso.categoria }}
-            </span>
+        <h2>
+            {{ paso.pregunta }}
+        </h2>
 
-            <h2>
-                {{ paso.pregunta }}
-            </h2>
-
-            <p>
-                Selecciona la respuesta que corresponda
-                al estado actual del equipo.
-            </p>
-
-        </div>
+        <p>
+            Selecciona una respuesta:
+        </p>
 
 
         <form
@@ -93,15 +88,16 @@ Diagnóstico | Mesa de Ayuda TI
 
 
             <button
+                class="answer yes"
                 type="submit"
                 name="respuesta"
                 value="si"
-                class="answer yes"
             >
 
                 <span>✓</span>
 
                 <div>
+
                     <strong>
                         Sí
                     </strong>
@@ -109,21 +105,23 @@ Diagnóstico | Mesa de Ayuda TI
                     <small>
                         La condición se cumple
                     </small>
+
                 </div>
 
             </button>
 
 
             <button
+                class="answer no"
                 type="submit"
                 name="respuesta"
                 value="no"
-                class="answer no"
             >
 
                 <span>✕</span>
 
                 <div>
+
                     <strong>
                         No
                     </strong>
@@ -131,6 +129,7 @@ Diagnóstico | Mesa de Ayuda TI
                     <small>
                         La condición no se cumple
                     </small>
+
                 </div>
 
             </button>
@@ -138,7 +137,6 @@ Diagnóstico | Mesa de Ayuda TI
         </form>
 
     </div>
-
 
     {% else %}
 
@@ -149,12 +147,12 @@ Diagnóstico | Mesa de Ayuda TI
         </div>
 
         <h2>
-            No hay diagnóstico configurado
+            No hay datos de diagnóstico
         </h2>
 
         <p>
-            Primero debemos cargar los pasos
-            del árbol de decisión.
+            Ejecuta el archivo seed.py para cargar
+            el árbol de decisión.
         </p>
 
     </div>

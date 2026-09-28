@@ -1,15 +1,196 @@
 {% extends "base.html" %}
-{% block title %}Tickets · Mesa de Ayuda TI{% endblock %}
+
+{% block title %}
+Tickets | Mesa de Ayuda TI
+{% endblock %}
+
+
 {% block content %}
-<div class="section-head"><div><span class="eyebrow">GESTIÓN</span><h1>Tickets</h1></div></div>
-<form class="ticket-form" method="post" action="{{ url_for('tickets.nuevo') }}">
-    <input name="titulo" placeholder="Título del incidente" required>
-    <select name="categoria"><option>Red</option><option>Hardware</option><option>Software</option><option>Impresora</option></select>
-    <select name="prioridad"><option>Alta</option><option selected>Media</option><option>Baja</option></select>
-    <textarea name="descripcion" placeholder="Describe el incidente" required></textarea>
-    <button class="button">Crear ticket</button>
-</form>
-<div class="table-wrap"><table><tr><th>Código</th><th>Título</th><th>Categoría</th><th>Prioridad</th><th>Estado</th></tr>
-{% for ticket in tickets %}<tr><td>{{ ticket.codigo }}</td><td>{{ ticket.titulo }}</td><td>{{ ticket.categoria }}</td><td>{{ ticket.prioridad }}</td><td>{{ ticket.estado }}</td></tr>{% else %}<tr><td colspan="5">No hay tickets registrados.</td></tr>{% endfor %}
-</table></div>
+
+<div class="page-container">
+
+    <span class="badge">
+        GESTIÓN DE INCIDENTES
+    </span>
+
+    <h1>
+        Tickets de soporte
+    </h1>
+
+    <p class="description">
+        Registra y consulta las incidencias reportadas.
+    </p>
+
+
+    <form
+        method="POST"
+        action="{{ url_for('tickets.nuevo') }}"
+        class="ticket-form"
+    >
+
+        <input
+            type="text"
+            name="titulo"
+            placeholder="Título del incidente"
+            required
+        >
+
+
+        <select name="categoria">
+
+            <option>
+                Red
+            </option>
+
+            <option>
+                Internet
+            </option>
+
+            <option>
+                Wi-Fi
+            </option>
+
+            <option>
+                Hardware
+            </option>
+
+            <option>
+                Software
+            </option>
+
+            <option>
+                Impresora
+            </option>
+
+            <option>
+                Rendimiento
+            </option>
+
+        </select>
+
+
+        <select name="prioridad">
+
+            <option>
+                Alta
+            </option>
+
+            <option selected>
+                Media
+            </option>
+
+            <option>
+                Baja
+            </option>
+
+        </select>
+
+
+        <input
+            type="text"
+            name="tecnico"
+            placeholder="Técnico asignado"
+        >
+
+
+        <textarea
+            name="descripcion"
+            placeholder="Descripción del incidente"
+            required
+        ></textarea>
+
+
+        <button
+            type="submit"
+            class="btn-primary"
+        >
+            Crear ticket
+        </button>
+
+    </form>
+
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Código
+                    </th>
+
+                    <th>
+                        Título
+                    </th>
+
+                    <th>
+                        Categoría
+                    </th>
+
+                    <th>
+                        Prioridad
+                    </th>
+
+                    <th>
+                        Estado
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            {% for ticket in tickets %}
+
+                <tr>
+
+                    <td>
+                        {{ ticket.codigo }}
+                    </td>
+
+                    <td>
+                        {{ ticket.titulo }}
+                    </td>
+
+                    <td>
+                        {{ ticket.categoria }}
+                    </td>
+
+                    <td>
+                        {{ ticket.prioridad }}
+                    </td>
+
+                    <td>
+                        <span class="status-badge">
+                            {{ ticket.estado }}
+                        </span>
+                    </td>
+
+                </tr>
+
+            {% else %}
+
+                <tr>
+
+                    <td colspan="5">
+                        No existen tickets registrados.
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
 {% endblock %}

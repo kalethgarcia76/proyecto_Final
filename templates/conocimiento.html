@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}
+Base de conocimiento
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-container">
+
+    <span class="badge">
+        BASE DE CONOCIMIENTO
+    </span>
+
+    <h1>
+        Soluciones técnicas
+    </h1>
+
+    <p class="description">
+        Procedimientos disponibles para resolver
+        incidencias frecuentes.
+    </p>
+
+
+    <div class="knowledge-grid">
+
+        {% for item in conocimientos %}
+
+        <div class="knowledge-card">
+
+            <span class="category">
+                {{ item.categoria }}
+            </span>
+
+            <h3>
+                {{ item.problema }}
+            </h3>
+
+            <p>
+                <strong>Síntomas:</strong>
+                {{ item.sintomas }}
+            </p>
+
+            <p>
+                <strong>Causa:</strong>
+                {{ item.causa }}
+            </p>
+
+            <p>
+                <strong>Procedimiento:</strong>
+                {{ item.procedimiento }}
+            </p>
+
+            <div class="solution-mini">
+
+                <strong>
+                    Solución
+                </strong>
+
+                <p>
+                    {{ item.solucion }}
+                </p>
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <h2>
+                No hay conocimientos registrados
+            </h2>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

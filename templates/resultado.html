@@ -20,13 +20,8 @@ Resultado | Mesa de Ayuda TI
         </span>
 
         <h1>
-            Se requiere revisión técnica
+            Requiere revisión técnica
         </h1>
-
-        <p>
-            El sistema no puede completar
-            automáticamente la resolución.
-        </p>
 
     {% else %}
 
@@ -48,7 +43,7 @@ Resultado | Mesa de Ayuda TI
     <div class="solution-box">
 
         <h3>
-            Procedimiento
+            Resultado del diagnóstico
         </h3>
 
         <p>
@@ -61,17 +56,17 @@ Resultado | Mesa de Ayuda TI
     <div class="result-actions">
 
         <a
-            href="{{ url_for('diagnostico.iniciar') }}"
             class="btn-primary"
+            href="{{ url_for('diagnostico.iniciar') }}"
         >
             Nuevo diagnóstico
         </a>
 
         <a
-            href="{{ url_for('main.inicio') }}"
             class="btn-secondary"
+            href="{{ url_for('tickets.listar') }}"
         >
-            Volver al inicio
+            Registrar ticket
         </a>
 
     </div>

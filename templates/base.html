@@ -5,10 +5,8 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>
         {% block title %}
@@ -16,10 +14,8 @@
         {% endblock %}
     </title>
 
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='css/style.css') }}"
-    >
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
 
 </head>
 
@@ -40,7 +36,6 @@
 
     </div>
 
-
     <nav>
 
         <a href="{{ url_for('main.inicio') }}">
@@ -51,6 +46,14 @@
             Diagnóstico
         </a>
 
+        <a href="{{ url_for('tickets.listar') }}">
+            Tickets
+        </a>
+
+        <a href="{{ url_for('conocimiento.listar') }}">
+            Conocimiento
+        </a>
+
     </nav>
 
 </header>
@@ -58,8 +61,9 @@
 
 <main>
 
-    {% block content %}
-    {% endblock %}
+{% block content %}
+
+{% endblock %}
 
 </main>
 
@@ -67,7 +71,7 @@
 <footer>
 
     <p>
-        Sistema de Mesa de Ayuda y Soporte TI
+        Mesa de Ayuda y Soporte TI
     </p>
 
 </footer>

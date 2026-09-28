@@ -9,7 +9,7 @@ Inicio | Mesa de Ayuda TI
 
 <section class="hero">
 
-    <div class="hero-content">
+    <div>
 
         <span class="badge">
             SISTEMA DE SOPORTE TI
@@ -17,21 +17,20 @@ Inicio | Mesa de Ayuda TI
 
         <h1>
             Diagnostica y resuelve
-            <br>
             incidencias de TI
         </h1>
 
         <p>
-            Utiliza nuestro asistente inteligente para
-            identificar problemas de infraestructura,
-            redes, hardware y software paso a paso.
+            Sistema inteligente de apoyo para técnicos
+            de soporte mediante un árbol de decisión
+            y una base de conocimiento.
         </p>
 
         <a
             href="{{ url_for('diagnostico.iniciar') }}"
             class="btn-primary"
         >
-            Iniciar diagnóstico
+            🧠 Iniciar diagnóstico
         </a>
 
     </div>
@@ -48,16 +47,13 @@ Inicio | Mesa de Ayuda TI
         </h3>
 
         <p>
-            Motor de decisión basado en
-            una base de conocimiento.
+            Analiza los síntomas y guía al técnico
+            hasta encontrar un procedimiento.
         </p>
 
         <div class="status">
-
             <span></span>
-
             Sistema disponible
-
         </div>
 
     </div>
@@ -69,9 +65,7 @@ Inicio | Mesa de Ayuda TI
 
     <div class="stat-card">
 
-        <span class="stat-icon">
-            🎫
-        </span>
+        <span>🎫</span>
 
         <strong>
             {{ total_tickets }}
@@ -86,9 +80,7 @@ Inicio | Mesa de Ayuda TI
 
     <div class="stat-card">
 
-        <span class="stat-icon">
-            🔧
-        </span>
+        <span>🔧</span>
 
         <strong>
             {{ tickets_abiertos }}
@@ -103,16 +95,14 @@ Inicio | Mesa de Ayuda TI
 
     <div class="stat-card">
 
-        <span class="stat-icon">
-            📚
-        </span>
+        <span>📚</span>
 
         <strong>
             {{ soluciones }}
         </strong>
 
         <p>
-            Soluciones registradas
+            Soluciones
         </p>
 
     </div>
@@ -122,18 +112,9 @@ Inicio | Mesa de Ayuda TI
 
 <section class="features">
 
-    <div class="section-title">
-
-        <span>
-            FUNCIONES
-        </span>
-
-        <h2>
-            Herramientas de soporte
-        </h2>
-
-    </div>
-
+    <h2>
+        Módulos del sistema
+    </h2>
 
     <div class="feature-grid">
 
@@ -142,56 +123,60 @@ Inicio | Mesa de Ayuda TI
             class="feature-card"
         >
 
-            <div class="feature-icon">
+            <div>
                 🧠
             </div>
 
             <h3>
-                Diagnóstico guiado
+                Diagnóstico
             </h3>
 
             <p>
-                Responde preguntas y sigue
-                el árbol de decisión.
+                Árbol de decisión para identificar
+                incidencias.
             </p>
 
         </a>
 
 
-        <div class="feature-card">
+        <a
+            href="{{ url_for('tickets.listar') }}"
+            class="feature-card"
+        >
 
-            <div class="feature-icon">
+            <div>
                 🎫
             </div>
 
             <h3>
-                Gestión de tickets
+                Tickets
             </h3>
 
             <p>
-                Registra y controla las
-                incidencias de soporte.
+                Registrar y consultar solicitudes.
             </p>
 
-        </div>
+        </a>
 
 
-        <div class="feature-card">
+        <a
+            href="{{ url_for('conocimiento.listar') }}"
+            class="feature-card"
+        >
 
-            <div class="feature-icon">
+            <div>
                 📚
             </div>
 
             <h3>
-                Base de conocimiento
+                Conocimiento
             </h3>
 
             <p>
-                Consulta procedimientos y
-                soluciones técnicas.
+                Procedimientos y soluciones técnicas.
             </p>
 
-        </div>
+        </a>
 
     </div>
 
