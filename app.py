@@ -28,7 +28,7 @@ def create_app():
 
     @app.before_request
     def require_login():
-        public_endpoints = {"auth.login", "static"}
+        public_endpoints = {"auth.login", "auth.registro", "static"}
 
         if request.endpoint in public_endpoints:
             return None
