@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="result">
+    <span class="eyebrow">RESULTADO</span>
+    <h1>Procedimiento recomendado</h1>
+    <p>{{ solucion }}</p>
+    <a class="button" href="{{ url_for('diagnostico.iniciar') }}">Nuevo diagnóstico</a>
+</div>
+{% endblock %}
