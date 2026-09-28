@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Diagnóstico · Mesa de Ayuda TI{% endblock %}
+{% block content %}
+<div class="wizard">
+    <span class="eyebrow">ASISTENTE DE DIAGNÓSTICO</span>
+    <h1>Diagnóstico guiado</h1>
+    {% if not paso %}
+        <p>Selecciona una incidencia para comenzar. En la siguiente versión las categorías se cargarán desde la base de conocimiento.</p>
+        <div class="category-grid">
+            <a class="category" href="{{ url_for('diagnostico.paso', paso_id=1) }}">🌐 <b>Red</b><small>Conectividad e Internet</small></a>
+        </div>
+    {% else %}
+        <div class="step"><span>Paso de diagnóstico</span><h2>{{ paso.pregunta }}</h2></div>
+        <form method="post" action="{{ url_for('diagnostico.resolver') }}" class="actions">
+            <input type="hidden" name="paso_id" value="{{ paso.id }}">
+            <button name="respuesta" value="si" class="button">Sí</button>
+            <button name="respuesta" value="no" class="button secondary">No</button>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}
