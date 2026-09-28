@@ -785,5 +785,109 @@ footer {
     .result-actions {
         flex-direction: column;
     }
+/* =========================================
+   CATEGORÍAS DEL DIAGNÓSTICO
+   ========================================= */
 
+.category-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 20px;
+
+    margin-top: 35px;
+}
+
+
+.diagnostic-category {
+    background: white;
+
+    border: 1px solid #eaecf0;
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    text-decoration: none;
+
+    color: #172033;
+
+    transition: all .2s ease;
+
+    position: relative;
+}
+
+
+.diagnostic-category:hover {
+    transform: translateY(-4px);
+
+    border-color: #155eef;
+
+    box-shadow:
+        0 12px 30px rgba(16, 24, 40, .10);
+}
+
+
+.category-icon {
+    width: 58px;
+    height: 58px;
+
+    background: #f2f4f7;
+
+    border-radius: 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 28px;
+
+    flex-shrink: 0;
+}
+
+
+.diagnostic-category h3 {
+    margin-bottom: 6px;
+
+    font-size: 18px;
+}
+
+
+.diagnostic-category p {
+    color: #667085;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    margin: 0;
+}
+
+
+.category-arrow {
+    margin-left: auto;
+
+    font-size: 24px;
+
+    color: #155eef;
+}
+
+
+@media (max-width: 800px) {
+
+    .category-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
 }
