@@ -1347,3 +1347,456 @@ nav a:hover {
         font-size: 34px;
     }
 }
+
+/* =========================================================
+   REGISTRO + DASHBOARD PROFESIONAL
+   ========================================================= */
+
+.register-shell {
+    width: min(1100px, 100%);
+    min-height: 720px;
+    display: grid;
+    grid-template-columns: .85fr 1.15fr;
+    overflow: hidden;
+    border-radius: 30px;
+    background: #fff;
+    box-shadow: 0 35px 90px rgba(0,0,0,.38);
+}
+
+.register-intro {
+    position: relative;
+    padding: 60px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background:
+        radial-gradient(circle at 10% 10%, rgba(59,130,246,.28), transparent 25%),
+        linear-gradient(150deg,#0b1220,#172554 60%,#312e81);
+}
+
+.register-intro h1 {
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin: 20px 0;
+}
+
+.register-intro p {
+    color: #cbd5e1;
+    line-height: 1.8;
+}
+
+.register-benefits {
+    display: grid;
+    gap: 13px;
+    margin-top: 32px;
+    color: #e2e8f0;
+    font-size: 14px;
+}
+
+.register-benefits span {
+    color: #93c5fd;
+    margin-right: 8px;
+}
+
+.register-card {
+    padding: 52px 58px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.register-form {
+    display: grid;
+    gap: 10px;
+}
+
+.register-form label {
+    color: #344054;
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 6px;
+}
+
+.register-form input {
+    height: 50px;
+    background: #f8fafc;
+}
+
+.register-form input:focus {
+    outline: none;
+    border-color: #2563eb;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(37,99,235,.1);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.password-hint {
+    margin-top: 8px;
+    padding: 11px 13px;
+    border-radius: 10px;
+    background: #f8faff;
+    border: 1px solid #e0e7ff;
+    color: #667085;
+    font-size: 11px;
+}
+
+.register-login-link,
+.register-prompt {
+    text-align: center;
+    color: #667085;
+    font-size: 13px;
+}
+
+.register-login-link {
+    margin-top: 22px;
+}
+
+.register-prompt {
+    margin: 18px 0 4px;
+}
+
+.register-login-link a,
+.register-prompt a {
+    color: #2563eb;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.register-login-link a:hover,
+.register-prompt a:hover {
+    text-decoration: underline;
+}
+
+/* Dashboard */
+
+.dashboard-page {
+    max-width: 1240px;
+    margin: auto;
+    padding: 32px 24px 80px;
+}
+
+.dashboard-hero {
+    max-width: none;
+    margin: 0;
+    min-height: 350px;
+    padding: 52px;
+    border-radius: 28px;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 90% 10%, rgba(96,165,250,.25), transparent 28%),
+        linear-gradient(125deg,#0b1220,#172554 60%,#312e81);
+    color: white;
+    box-shadow: 0 25px 60px rgba(15,23,42,.18);
+}
+
+.dashboard-hero::after {
+    content: "";
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    right: -160px;
+    top: -210px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 50%;
+    box-shadow: 0 0 0 55px rgba(255,255,255,.025), 0 0 0 110px rgba(255,255,255,.018);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 680px;
+}
+
+.welcome-line {
+    color: #93c5fd;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.7px;
+}
+
+.live-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 7px;
+    border-radius: 50%;
+    background: #34d399;
+    box-shadow: 0 0 0 5px rgba(52,211,153,.13);
+}
+
+.dashboard-hero h1 {
+    margin: 18px 0;
+    font-size: clamp(36px,5vw,58px);
+    line-height: 1.02;
+    letter-spacing: -2px;
+}
+
+.dashboard-hero h1 span {
+    color: #93c5fd;
+}
+
+.dashboard-hero p {
+    color: #cbd5e1;
+    max-width: 590px;
+    line-height: 1.7;
+    font-size: 16px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 26px;
+}
+
+.dashboard-hero .btn-secondary {
+    background: rgba(255,255,255,.1);
+    color: white;
+    border: 1px solid rgba(255,255,255,.15);
+}
+
+.dashboard-orb {
+    position: absolute;
+    right: 10%;
+    top: 50%;
+    width: 230px;
+    height: 230px;
+    transform: translateY(-50%);
+    display: grid;
+    place-items: center;
+}
+
+.orb-ring {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(147,197,253,.25);
+    border-radius: 50%;
+}
+
+.ring-two {
+    inset: 25px;
+    border-color: rgba(129,140,248,.4);
+}
+
+.orb-core {
+    width: 105px;
+    height: 105px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: white;
+    font-size: 26px;
+    font-weight: 900;
+    background: linear-gradient(135deg,#2563eb,#7c3aed);
+    box-shadow: 0 0 45px rgba(59,130,246,.45);
+}
+
+.orb-label {
+    position: absolute;
+    bottom: 3px;
+    color: #bfdbfe;
+    text-align: center;
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.orb-label small {
+    font-size: 8px;
+    color: #94a3b8;
+}
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 18px;
+    margin: 22px 0 50px;
+}
+
+.modern-stat {
+    padding: 24px;
+    border-radius: 20px;
+    border: 1px solid #eaecf0;
+    background: white;
+    box-shadow: 0 10px 28px rgba(15,23,42,.05);
+}
+
+.stat-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat-icon {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: #eff6ff;
+}
+
+.stat-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #98a2b3;
+}
+
+.modern-stat strong {
+    display: block;
+    margin-top: 17px;
+    font-size: 38px;
+    color: #101828;
+}
+
+.modern-stat p {
+    color: #667085;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.dashboard-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 18px;
+}
+
+.section-kicker {
+    color: #2563eb;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.dashboard-section-header h2 {
+    margin-top: 5px;
+    font-size: 28px;
+}
+
+.dashboard-section-header > p {
+    color: #667085;
+    font-size: 13px;
+}
+
+.modern-module-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 18px;
+}
+
+.modern-module {
+    min-height: 190px;
+    display: flex;
+    gap: 20px;
+    padding: 28px;
+    color: inherit;
+    text-decoration: none;
+    border: 1px solid #eaecf0;
+    border-radius: 22px;
+    background: white;
+    box-shadow: 0 10px 28px rgba(15,23,42,.04);
+    transition: .22s ease;
+}
+
+.modern-module:hover {
+    transform: translateY(-4px);
+    border-color: #bfdbfe;
+    box-shadow: 0 18px 38px rgba(15,23,42,.09);
+}
+
+.module-main {
+    grid-column: span 2;
+    background: linear-gradient(135deg,#ffffff,#f5f8ff);
+}
+
+.module-icon {
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    font-size: 28px;
+    background: #eff6ff;
+}
+
+.module-tag {
+    color: #2563eb;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+}
+
+.modern-module h3 {
+    margin: 7px 0 8px;
+    font-size: 21px;
+}
+
+.modern-module p {
+    color: #667085;
+    line-height: 1.6;
+    font-size: 13px;
+    margin-bottom: 13px;
+}
+
+.module-link {
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+@media (max-width: 900px) {
+    .register-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .register-intro {
+        padding: 40px 30px;
+    }
+
+    .register-card {
+        padding: 40px 30px;
+    }
+
+    .dashboard-orb {
+        opacity: .3;
+        right: -20px;
+    }
+}
+
+@media (max-width: 700px) {
+    .form-row,
+    .dashboard-stats,
+    .modern-module-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .module-main {
+        grid-column: auto;
+    }
+
+    .dashboard-hero {
+        padding: 35px 25px;
+    }
+
+    .dashboard-section-header {
+        display: block;
+    }
+
+    .dashboard-section-header > p {
+        margin-top: 8px;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+    }
+}
