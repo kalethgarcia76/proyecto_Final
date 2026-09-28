@@ -2,7 +2,7 @@ from datetime import datetime
 
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash\nfrom sqlalchemy import or_
 
 from database.database import db
 from models.usuario import Usuario, RegistroAcceso
