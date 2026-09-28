@@ -8,6 +8,8 @@ from flask import (
 
 from models.paso_decision import PasoDecision
 
+from services.motor_decision import MotorDecision
+
 
 diagnostico_bp = Blueprint(
     "diagnostico",
@@ -24,7 +26,8 @@ def iniciar():
 
         return render_template(
             "diagnostico.html",
-            paso=None
+            paso=None,
+            total_pasos=0
         )
 
     return redirect(
@@ -35,10 +38,12 @@ def iniciar():
     )
 
 
-@diagnostico_bp.route("/paso/<int:paso_id>")
+@diagnostico_bp.route(
+    "/paso/<int:paso_id>"
+)
 def paso(paso_id):
 
-    paso_actual = PasoDecision.query.get_or_404(
+    paso_actual = MotorDecision.obtener_paso(
         paso_id
     )
 
@@ -63,43 +68,37 @@ def resolver():
 
     respuesta = request.form["respuesta"]
 
-    paso_actual = PasoDecision.query.get_or_404(
+    paso = MotorDecision.obtener_paso(
         paso_id
     )
 
-    if respuesta == "si":
+    resultado = MotorDecision.procesar_respuesta(
+        paso,
+        respuesta
+    )
 
-        siguiente = paso_actual.siguiente_si
-        solucion = paso_actual.solucion_si
-        escalar = paso_actual.escalar_si
-
-    else:
-
-        siguiente = paso_actual.siguiente_no
-        solucion = paso_actual.solucion_no
-        escalar = paso_actual.escalar_no
-
-    # Si encontramos una solución
-    if solucion:
+    if resultado["solucion"]:
 
         return render_template(
             "resultado.html",
-            solucion=solucion,
-            escalar=escalar
+            solucion=resultado["solucion"],
+            escalar=resultado["escalar"]
         )
 
-    # Continuar con el siguiente nodo
-    if siguiente:
+    if resultado["siguiente"]:
 
         return redirect(
             url_for(
                 "diagnostico.paso",
-                paso_id=siguiente
+                paso_id=resultado["siguiente"]
             )
         )
 
     return render_template(
         "resultado.html",
-        solucion="No se encontró una solución automática. El incidente debe ser revisado por un técnico especializado.",
+        solucion=(
+            "No se encontró una solución automática. "
+            "El incidente debe ser escalado a un técnico especializado."
+        ),
         escalar=True
     )
