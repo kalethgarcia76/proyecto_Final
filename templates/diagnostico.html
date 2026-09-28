@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}
+Diagnóstico | Mesa de Ayuda TI
+{% endblock %}
+
+{% block content %}
+<div class="diagnostic-container">
+
+    <div class="diagnostic-header">
+        <span class="badge">ASISTENTE DE DIAGNÓSTICO</span>
+
+        <h1>{{ paso.categoria }}</h1>
+
+        <p>
+            Responde las preguntas para que el motor de decisión
+            determine el siguiente paso.
+        </p>
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-info">
+            <span>Paso {{ paso_numero }} del diagnóstico</span>
+            <span>{{ paso_numero }} / {{ total_pasos }}</span>
+        </div>
+        <div class="progress-bar">
+            <div
+                class="progress"
+                style="width: {{ ((paso_numero / total_pasos) * 100) if total_pasos else 0 }}%;"
+            ></div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-number">{{ paso_numero }}</div>
+        <span class="category">{{ paso.categoria|upper }}</span>
+
+        <h2>{{ paso.pregunta }}</h2>
+
+        <p>
+            Selecciona una respuesta para continuar con el árbol de decisión.
+        </p>
+
+        <form method="POST" action="{{ url_for('diagnostico.paso', paso_id=paso.id) }}">
+            <div class="answer-buttons">
+
+                <button class="answer yes" type="submit" name="respuesta" value="si">
+                    <span>✓</span>
+                    <div>
+                        <strong>Sí</strong>
+                        <small>{{ paso.opcion_si or "Sí, la condición se cumple." }}</small>
+                    </div>
+                </button>
+
+                <button class="answer no" type="submit" name="respuesta" value="no">
+                    <span>✕</span>
+                    <div>
+                        <strong>No</strong>
+                        <small>{{ paso.opcion_no or "No, la condición no se cumple." }}</small>
+                    </div>
+                </button>
+
+            </div>
+        </form>
+
+        <div class="wizard-actions">
+            <a class="btn-secondary" href="{{ url_for('diagnostico.iniciar') }}">
+                ← Cambiar categoría
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
