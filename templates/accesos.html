@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Auditoría | Mesa de Ayuda TI{% endblock %}
+
+{% block content %}
+<section class="page-container">
+
+    <span class="badge">SEGURIDAD DEL SISTEMA</span>
+
+    <h1>Registro de accesos</h1>
+
+    <p class="description">
+        Historial de inicios de sesión registrados por la plataforma.
+    </p>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha y hora</th>
+                    <th>Usuario</th>
+                    <th>Dirección IP</th>
+                    <th>Resultado</th>
+                    <th>Detalle</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for registro in registros %}
+                <tr>
+                    <td>{{ registro.fecha_hora.strftime('%d/%m/%Y %H:%M:%S') }}</td>
+                    <td><strong>{{ registro.usuario }}</strong></td>
+                    <td>{{ registro.ip or 'No disponible' }}</td>
+                    <td>
+                        {% if registro.exitoso %}
+                            <span class="status-badge success-badge">Correcto</span>
+                        {% else %}
+                            <span class="status-badge warning-badge">Fallido</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ registro.motivo or '—' }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5">Todavía no hay registros de acceso.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</section>
+{% endblock %}
