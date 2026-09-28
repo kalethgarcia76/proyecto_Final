@@ -8,18 +8,13 @@ class Ticket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     codigo = db.Column(
-        db.String(20),
+        db.String(30),
         unique=True,
         nullable=False
     )
 
     titulo = db.Column(
         db.String(150),
-        nullable=False
-    )
-
-    descripcion = db.Column(
-        db.Text,
         nullable=False
     )
 
@@ -38,8 +33,9 @@ class Ticket(db.Model):
         default="Nuevo"
     )
 
-    tecnico = db.Column(
-        db.String(100)
+    descripcion = db.Column(
+        db.Text,
+        nullable=False
     )
 
     diagnostico = db.Column(
@@ -48,6 +44,10 @@ class Ticket(db.Model):
 
     solucion = db.Column(
         db.Text
+    )
+
+    tecnico = db.Column(
+        db.String(100)
     )
 
     creado_en = db.Column(
@@ -60,6 +60,3 @@ class Ticket(db.Model):
         default=datetime.utcnow,
         onupdate=datetime.utcnow
     )
-
-    def __repr__(self):
-        return f"<Ticket {self.codigo}>"
