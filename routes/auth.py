@@ -2,7 +2,7 @@ from datetime import datetime
 
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from sqlalchemy import or_
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from database.database import db
 from models.usuario import Usuario, RegistroAcceso
@@ -73,6 +73,85 @@ def login():
         flash("Usuario o contraseña incorrectos.", "error")
 
     return render_template("login.html")
+
+
+@auth_bp.route("/registro", methods=["GET", "POST"])
+def registro():
+    if session.get("usuario_id"):
+        return redirect(url_for("main.inicio"))
+
+    if request.method == "POST":
+        nombre = request.form.get("nombre", "").strip()
+        usuario_texto = request.form.get("usuario", "").strip().lower()
+        correo = request.form.get("correo", "").strip().lower()
+        password = request.form.get("password", "")
+        confirmar = request.form.get("confirmar", "")
+
+        if not all([nombre, usuario_texto, correo, password, confirmar]):
+            flash("Completa todos los campos.", "error")
+            return render_template(
+                "registro.html",
+                nombre=nombre,
+                usuario=usuario_texto,
+                correo=correo
+            )
+
+        if len(nombre) < 3:
+            flash("El nombre debe tener al menos 3 caracteres.", "error")
+            return render_template("registro.html", nombre=nombre, usuario=usuario_texto, correo=correo)
+
+        if len(usuario_texto) < 4 or not usuario_texto.replace("_", "").replace("-", "").isalnum():
+            flash("El usuario debe tener al menos 4 caracteres y solo puede contener letras, números, guion o guion bajo.", "error")
+            return render_template("registro.html", nombre=nombre, usuario=usuario_texto, correo=correo)
+
+        if "@" not in correo or "." not in correo.split("@")[-1]:
+            flash("Ingresa un correo electrónico válido.", "error")
+            return render_template("registro.html", nombre=nombre, usuario=usuario_texto, correo=correo)
+
+        if len(password) < 8:
+            flash("La contraseña debe tener al menos 8 caracteres.", "error")
+            return render_template("registro.html", nombre=nombre, usuario=usuario_texto, correo=correo)
+
+        if password != confirmar:
+            flash("Las contraseñas no coinciden.", "error")
+            return render_template("registro.html", nombre=nombre, usuario=usuario_texto, correo=correo)
+
+        existente = Usuario.query.filter(
+            or_(
+                Usuario.usuario == usuario_texto,
+                Usuario.correo == correo
+            )
+        ).first()
+
+        if existente:
+            if existente.usuario == usuario_texto:
+                flash("Ese nombre de usuario ya está registrado.", "error")
+            else:
+                flash("Ese correo electrónico ya está registrado.", "error")
+
+            return render_template(
+                "registro.html",
+                nombre=nombre,
+                usuario=usuario_texto,
+                correo=correo
+            )
+
+        nuevo_usuario = Usuario(
+            nombre=nombre,
+            usuario=usuario_texto,
+            correo=correo,
+            password_hash=generate_password_hash(password),
+            rol="tecnico",
+            activo=True
+        )
+
+        db.session.add(nuevo_usuario)
+        db.session.commit()
+
+        flash("Cuenta creada correctamente. Ya puedes iniciar sesión.", "success")
+        return redirect(url_for("auth.login"))
+
+    return render_template("registro.html")
 
 
 @auth_bp.route("/logout")
