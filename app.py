@@ -6,7 +6,7 @@ from routes.main import main_bp
 from routes.diagnostico import diagnostico_bp
 from routes.tickets import tickets_bp
 from routes.conocimiento import conocimiento_bp
-from routes.auth import auth_bp
+from routes.auth import auth_bp\nfrom routes.accesos import accesos_bp
 
 
 def create_app():
@@ -15,7 +15,7 @@ def create_app():
 
     db.init_app(app)
 
-    app.register_blueprint(auth_bp)
+    app.register_blueprint(auth_bp)\n    app.register_blueprint(accesos_bp, url_prefix="/accesos")
     app.register_blueprint(main_bp)
     app.register_blueprint(diagnostico_bp, url_prefix="/diagnostico")
     app.register_blueprint(tickets_bp, url_prefix="/tickets")
