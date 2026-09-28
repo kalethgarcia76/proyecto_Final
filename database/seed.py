@@ -1,304 +1,65 @@
-from app import app
-
 from database.database import db
-
 from models.paso_decision import PasoDecision
 from models.conocimiento import Conocimiento
 
+def cargar_datos():
+    pasos = [
+        (100,"Red","¿El equipo está conectado a la red?",None,"Conecte el cable Ethernet o active el adaptador de red.",101,None,None,False,False),
+        (101,"Red","¿El equipo tiene una dirección IP válida?",None,"Renueve la dirección IP con ipconfig /renew.",102,None,None,False,False),
+        (102,"Red","¿Puede hacer ping al gateway?",None,"Revise conexión con router, cableado, VLAN y adaptador.",103,None,None,False,True),
+        (103,"Red","¿Puede navegar por Internet?","La conectividad funciona; revise la aplicación específica si persiste el incidente.","Pruebe DNS con nslookup y revise los servidores DNS.",None,None,None,False,True),
+        (200,"Wi-Fi","¿El Wi-Fi está activado?",None,"Active el adaptador Wi-Fi.",201,None,None,False,False),
+        (201,"Wi-Fi","¿La red inalámbrica aparece disponible?",None,"Revise señal y punto de acceso.",202,None,None,False,False),
+        (202,"Wi-Fi","¿La contraseña permite conectarse?",None,"Olvide la red y vuelva a conectarse con la contraseña correcta.",203,None,None,False,False),
+        (203,"Wi-Fi","¿El equipo obtiene una dirección IP?","La conexión Wi-Fi está establecida; si no hay Internet, revise DNS/red.","Renueve DHCP y revise el router o servidor DHCP.",None,None,None,False,True),
+        (300,"Hardware","¿El equipo enciende normalmente?",None,"Revise alimentación, cargador/fuente, toma y cableado. Si continúa, escale.",301,None,None,False,True),
+        (301,"Hardware","¿El sistema muestra un error de hardware?",None,"Revise controladores y periféricos.",302,None,None,False,False),
+        (302,"Hardware","¿El problema está relacionado con un periférico?","Pruebe otro puerto, cable y controlador.","Realice un diagnóstico general de hardware y registre síntomas.",None,None,None,False,True),
+        (400,"Rendimiento","¿El uso de CPU supera aproximadamente el 80%?",None,None,401,402,None,False,False),
+        (401,"Rendimiento","¿Hay un proceso no esencial consumiendo CPU?","Identifique el proceso y cierre solo procesos no esenciales.","Si el proceso es esencial, documente el servicio y escale.",None,None,None,False,True),
+        (402,"Rendimiento","¿La memoria RAM supera aproximadamente el 80%?","Cierre aplicaciones innecesarias y revise programas de inicio.","Revise espacio libre, programas de inicio, actualizaciones y almacenamiento.",None,None,None,False,False),
+        (500,"Impresora","¿La impresora está encendida?",None,"Conecte la impresora a la alimentación.",501,None,None,False,False),
+        (501,"Impresora","¿La impresora aparece disponible en el sistema?",None,"Compruebe conexión, IP y vuelva a agregarla.",502,None,None,False,False),
+        (502,"Impresora","¿El documento queda detenido en la cola?","Cancele trabajos pendientes y reinicie el servicio de cola.","Revise papel, tinta/tóner, atascos y controlador.",None,None,None,False,False),
+        (600,"Software","¿La aplicación abre correctamente?",None,"Repare o reinstale la aplicación y compruebe requisitos y permisos.",601,None,None,False,False),
+        (601,"Software","¿El problema ocurre solo con un usuario?","Revise perfil, permisos y configuración del usuario.","Revise instalación, dependencias, actualizaciones y compatibilidad.",None,None,None,False,True),
+    ]
 
-def cargar_arbol():
+    for row in pasos:
+        pid,categoria,pregunta,sol_si,sol_no,sig_si,sig_no,_,esc_si,esc_no = row
+        obj=db.session.get(PasoDecision,pid)
+        if obj is None:
+            obj=PasoDecision(id=pid)
+            db.session.add(obj)
+        obj.categoria=categoria
+        obj.pregunta=pregunta
+        obj.solucion_si=sol_si
+        obj.solucion_no=sol_no
+        obj.siguiente_si=sig_si
+        obj.siguiente_no=sig_no
+        obj.escalar_si=esc_si
+        obj.escalar_no=esc_no
 
-    with app.app_context():
+    datos=[
+        ("Red","Sin conexión a Internet","El equipo no puede navegar.","Problemas de IP, DNS, adaptador o conexión.","Verificar conexión, IP, gateway y DNS.","Restablecer la conexión y validar parámetros de red.","Alta",False),
+        ("Wi-Fi","Wi-Fi desconectado","No detecta o no conecta a la red inalámbrica.","Adaptador, señal o configuración incorrecta.","Verificar Wi-Fi, señal, contraseña y DHCP.","Activar adaptador y reconectar.","Media",False),
+        ("Hardware","Equipo no enciende","No inicia el sistema.","Alimentación o componente defectuoso.","Revisar fuente, cargador, toma y componentes.","Corregir alimentación o escalar.","Alta",True),
+        ("Rendimiento","Equipo lento","Aplicaciones tardan en responder.","CPU/RAM elevada, almacenamiento o procesos.","Revisar Administrador de tareas y almacenamiento.","Cerrar procesos y realizar mantenimiento.","Media",False),
+        ("Impresora","Impresora no imprime","Documentos permanecen en cola.","Cola, conexión o controlador.","Revisar cola, conexión y servicio.","Cancelar trabajos y reiniciar servicio.","Media",False),
+        ("Software","Aplicación no inicia","El programa se cierra o no responde.","Archivos, permisos o incompatibilidad.","Revisar permisos, actualizar y reparar/reinstalar.","Reparar o reinstalar.","Media",False),
+    ]
+    for d in datos:
+        categoria,problema,sintomas,causa,procedimiento,solucion,prioridad,escalar=d
+        obj=Conocimiento.query.filter_by(categoria=categoria,problema=problema).first()
+        if obj is None:
+            obj=Conocimiento(categoria=categoria,problema=problema)
+            db.session.add(obj)
+        obj.sintomas=sintomas; obj.causa=causa; obj.procedimiento=procedimiento
+        obj.solucion=solucion; obj.prioridad=prioridad; obj.requiere_escalamiento=escalar
 
-        # -------------------------
-        # ÁRBOL DE DECISIÓN
-        # -------------------------
-
-        pasos = [
-
-            PasoDecision(
-                id=1,
-                categoria="General",
-                pregunta="¿Cuál es el tipo principal de problema?",
-                siguiente_si=2,
-                siguiente_no=3
-            ),
-
-            PasoDecision(
-                id=2,
-                categoria="Red",
-                pregunta="¿El equipo puede conectarse a la red?",
-                siguiente_si=4,
-                siguiente_no=5
-            ),
-
-            PasoDecision(
-                id=3,
-                categoria="Hardware",
-                pregunta="¿El equipo enciende normalmente?",
-                siguiente_si=10,
-                siguiente_no=11
-            ),
-
-            PasoDecision(
-                id=4,
-                categoria="Internet",
-                pregunta="¿Puedes abrir páginas de Internet?",
-                siguiente_si=6,
-                siguiente_no=7
-            ),
-
-            PasoDecision(
-                id=5,
-                categoria="Red",
-                pregunta="¿El cable de red está conectado o el Wi-Fi está activado?",
-                solucion_si=(
-                    "Reinicie el adaptador de red, "
-                    "verifique la dirección IP y realice "
-                    "una prueba de conectividad con ping."
-                ),
-                solucion_no=(
-                    "Conecte correctamente el cable Ethernet "
-                    "o active la conexión Wi-Fi."
-                )
-            ),
-
-            PasoDecision(
-                id=6,
-                categoria="Internet",
-                pregunta="¿El problema solamente ocurre en una aplicación?",
-                solucion_si=(
-                    "La conectividad general funciona. "
-                    "Revise la configuración de red, proxy "
-                    "o permisos de la aplicación afectada."
-                ),
-                solucion_no=(
-                    "La conexión parece funcionar correctamente. "
-                    "Verifique el servicio específico que presenta "
-                    "la incidencia."
-                )
-            ),
-
-            PasoDecision(
-                id=7,
-                categoria="Internet",
-                pregunta="¿El equipo tiene una dirección IP válida?",
-                solucion_si=(
-                    "Realice una prueba de DNS utilizando "
-                    "nslookup y revise la configuración DNS."
-                ),
-                solucion_no=(
-                    "Renueve la dirección IP mediante ipconfig /renew "
-                    "y vuelva a comprobar la conectividad."
-                )
-            ),
-
-            PasoDecision(
-                id=10,
-                categoria="Hardware",
-                pregunta="¿El equipo funciona pero presenta lentitud?",
-                siguiente_si=12,
-                siguiente_no=13
-            ),
-
-            PasoDecision(
-                id=11,
-                categoria="Hardware",
-                pregunta="¿El equipo muestra alguna señal de energía?",
-                solucion_si=(
-                    "Revise monitor, cables, almacenamiento, "
-                    "memoria RAM y componentes internos."
-                ),
-                solucion_no=(
-                    "Revise el cable de alimentación, cargador, "
-                    "fuente de poder y toma eléctrica. "
-                    "Si continúa sin encender, escale el incidente."
-                ),
-                escalar_no=True
-            ),
-
-            PasoDecision(
-                id=12,
-                categoria="Rendimiento",
-                pregunta="¿El consumo de CPU o memoria es elevado?",
-                solucion_si=(
-                    "Abra el administrador de tareas, identifique "
-                    "el proceso con mayor consumo y cierre únicamente "
-                    "procesos no esenciales."
-                ),
-                solucion_no=(
-                    "Revise espacio disponible en disco, programas "
-                    "de inicio, actualizaciones y estado del almacenamiento."
-                )
-            ),
-
-            PasoDecision(
-                id=13,
-                categoria="Hardware",
-                pregunta="¿El problema está relacionado con un periférico?",
-                solucion_si=(
-                    "Verifique cables, controladores y conexión USB. "
-                    "Pruebe el periférico en otro puerto."
-                ),
-                solucion_no=(
-                    "Realice un diagnóstico general de hardware "
-                    "y documente los síntomas encontrados."
-                )
-            ),
-
-            PasoDecision(
-                id=20,
-                categoria="Impresora",
-                pregunta="¿La impresora está encendida?",
-                siguiente_si=21,
-                siguiente_no=22
-            ),
-
-            PasoDecision(
-                id=21,
-                categoria="Impresora",
-                pregunta="¿La impresora aparece disponible en el sistema?",
-                siguiente_si=23,
-                siguiente_no=24
-            ),
-
-            PasoDecision(
-                id=22,
-                categoria="Impresora",
-                pregunta="¿La impresora recibe alimentación eléctrica?",
-                solucion_si=(
-                    "Verifique el botón de encendido y el estado "
-                    "del panel de la impresora."
-                ),
-                solucion_no=(
-                    "Revise cable de alimentación, toma eléctrica "
-                    "y fuente de la impresora."
-                )
-            ),
-
-            PasoDecision(
-                id=23,
-                categoria="Impresora",
-                pregunta="¿El documento queda detenido en la cola de impresión?",
-                solucion_si=(
-                    "Abra la cola de impresión, cancele los trabajos "
-                    "pendientes y reinicie el servicio de cola de impresión."
-                ),
-                solucion_no=(
-                    "Compruebe papel, tinta/tóner, atascos y configuración "
-                    "de la impresora."
-                )
-            ),
-
-            PasoDecision(
-                id=24,
-                categoria="Impresora",
-                pregunta="¿La impresora está conectada a la misma red?",
-                solucion_si=(
-                    "Reinstale o actualice el controlador de la impresora "
-                    "y compruebe su dirección IP."
-                ),
-                solucion_no=(
-                    "Conecte la impresora a la red correspondiente "
-                    "y vuelva a agregarla al sistema."
-                )
-            )
-        ]
-
-        # Evitar duplicados
-        for paso in pasos:
-
-            existente = PasoDecision.query.get(
-                paso.id
-            )
-
-            if not existente:
-
-                db.session.add(paso)
-
-
-        # -------------------------
-        # BASE DE CONOCIMIENTO
-        # -------------------------
-
-        conocimientos = [
-
-            Conocimiento(
-                categoria="Red",
-                problema="Sin conexión a Internet",
-                sintomas="El equipo no puede navegar.",
-                causa="Problemas de IP, DNS, adaptador o conexión.",
-                procedimiento="Verificar conexión, IP, DNS y realizar pruebas de ping.",
-                solucion="Restablecer la conexión y configurar correctamente los parámetros de red.",
-                prioridad="Alta"
-            ),
-
-            Conocimiento(
-                categoria="Wi-Fi",
-                problema="Wi-Fi desconectado",
-                sintomas="El equipo no detecta o no conecta a la red inalámbrica.",
-                causa="Adaptador deshabilitado, señal insuficiente o configuración incorrecta.",
-                procedimiento="Verificar Wi-Fi, señal, contraseña y adaptador.",
-                solucion="Activar el adaptador y reconectar a la red.",
-                prioridad="Media"
-            ),
-
-            Conocimiento(
-                categoria="Hardware",
-                problema="Equipo no enciende",
-                sintomas="No inicia el sistema.",
-                causa="Alimentación eléctrica o componente defectuoso.",
-                procedimiento="Revisar alimentación, cargador, fuente y componentes.",
-                solucion="Corregir alimentación o escalar a revisión especializada.",
-                prioridad="Alta",
-                requiere_escalamiento=True
-            ),
-
-            Conocimiento(
-                categoria="Rendimiento",
-                problema="Equipo lento",
-                sintomas="Aplicaciones tardan en responder.",
-                causa="Uso elevado de CPU/RAM, almacenamiento lleno o procesos innecesarios.",
-                procedimiento="Revisar administrador de tareas y almacenamiento.",
-                solucion="Cerrar procesos innecesarios y realizar mantenimiento.",
-                prioridad="Media"
-            ),
-
-            Conocimiento(
-                categoria="Impresora",
-                problema="Impresora no imprime",
-                sintomas="Los documentos permanecen en cola.",
-                causa="Cola de impresión detenida o impresora desconectada.",
-                procedimiento="Revisar cola, conexión y servicio de impresión.",
-                solucion="Cancelar trabajos pendientes y reiniciar el servicio.",
-                prioridad="Media"
-            ),
-
-            Conocimiento(
-                categoria="Software",
-                problema="Aplicación no inicia",
-                sintomas="El programa se cierra o no responde.",
-                causa="Archivos dañados, permisos o incompatibilidad.",
-                procedimiento="Revisar permisos, actualizar y reinstalar.",
-                solucion="Reparar o reinstalar la aplicación.",
-                prioridad="Media"
-            )
-        ]
-
-        for conocimiento in conocimientos:
-
-            db.session.add(
-                conocimiento
-            )
-
-
-        db.session.commit()
-
-        print(
-            "Base de conocimiento y árbol cargados correctamente."
-        )
-
+    db.session.commit()
 
 if __name__ == "__main__":
-
-    cargar_arbol()
+    from app import app
+    with app.app_context():
+        cargar_datos()
