@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}
+Diagnóstico | Mesa de Ayuda TI
+{% endblock %}
+
+
+{% block content %}
+
+<div class="diagnostic-container">
+
+    <div class="diagnostic-header">
+
+        <span class="badge">
+            ASISTENTE DE DIAGNÓSTICO
+        </span>
+
+        <h1>
+            ¿Qué problema presenta el equipo?
+        </h1>
+
+        <p>
+            Selecciona la categoría para iniciar
+            el diagnóstico guiado.
+        </p>
+
+    </div>
+
+
+    <div class="category-grid">
+
+        {% for clave, categoria in categorias.items() %}
+
+        <a
+            href="{{ url_for(
+                'diagnostico.categoria',
+                categoria=clave
+            ) }}"
+            class="diagnostic-category"
+        >
+
+            <div class="category-icon">
+                {{ categoria.icono }}
+            </div>
+
+            <div>
+
+                <h3>
+                    {{ categoria.nombre }}
+                </h3>
+
+                <p>
+                    {{ categoria.descripcion }}
+                </p>
+
+            </div>
+
+            <span class="category-arrow">
+                →
+            </span>
+
+        </a>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
