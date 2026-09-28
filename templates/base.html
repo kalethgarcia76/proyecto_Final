@@ -35,7 +35,7 @@
         <a href="{{ url_for('main.inicio') }}">Inicio</a>
         <a href="{{ url_for('diagnostico.iniciar') }}">Diagnóstico</a>
         <a href="{{ url_for('tickets.listar') }}">Tickets</a>
-        <a href="{{ url_for('conocimiento.listar') }}">Conocimiento</a>
+        <a href="{{ url_for('conocimiento.listar') }}">Conocimiento</a>\n        {% if session.get("rol") == "administrador" %}\n        <a href="{{ url_for('accesos.listar') }}">Auditoría</a>\n        {% endif %}
     </nav>
 
     <div class="user-menu">
