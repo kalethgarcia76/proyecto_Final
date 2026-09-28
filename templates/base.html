@@ -1,20 +1,77 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Mesa de Ayuda TI{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}
+        Mesa de Ayuda TI
+        {% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
 </head>
+
 <body>
+
 <header class="topbar">
-    <div class="brand">🛠️ Mesa de Ayuda TI</div>
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            TI
+        </div>
+
+        <div>
+            <strong>Mesa de Ayuda</strong>
+            <span>Soporte TI</span>
+        </div>
+
+    </div>
+
+
     <nav>
-        <a href="{{ url_for('main.index') }}">Inicio</a>
-        <a href="{{ url_for('diagnostico.iniciar') }}">Diagnóstico</a>
-        <a href="{{ url_for('tickets.listar') }}">Tickets</a>
+
+        <a href="{{ url_for('main.inicio') }}">
+            Inicio
+        </a>
+
+        <a href="{{ url_for('diagnostico.iniciar') }}">
+            Diagnóstico
+        </a>
+
     </nav>
+
 </header>
-<main class="container">{% block content %}{% endblock %}</main>
+
+
+<main>
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+
+<footer>
+
+    <p>
+        Sistema de Mesa de Ayuda y Soporte TI
+    </p>
+
+</footer>
+
 </body>
+
 </html>

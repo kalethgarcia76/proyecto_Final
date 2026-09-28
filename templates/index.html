@@ -1,16 +1,200 @@
 {% extends "base.html" %}
+
+{% block title %}
+Inicio | Mesa de Ayuda TI
+{% endblock %}
+
+
 {% block content %}
+
 <section class="hero">
-    <div>
-        <span class="eyebrow">SOPORTE · INFRAESTRUCTURA · REDES</span>
-        <h1>Centro de soporte TI</h1>
-        <p>Diagnostica incidencias paso a paso y registra cada caso en un solo lugar.</p>
-        <a class="button" href="{{ url_for('diagnostico.iniciar') }}">Iniciar diagnóstico</a>
+
+    <div class="hero-content">
+
+        <span class="badge">
+            SISTEMA DE SOPORTE TI
+        </span>
+
+        <h1>
+            Diagnostica y resuelve
+            <br>
+            incidencias de TI
+        </h1>
+
+        <p>
+            Utiliza nuestro asistente inteligente para
+            identificar problemas de infraestructura,
+            redes, hardware y software paso a paso.
+        </p>
+
+        <a
+            href="{{ url_for('diagnostico.iniciar') }}"
+            class="btn-primary"
+        >
+            Iniciar diagnóstico
+        </a>
+
     </div>
+
+
+    <div class="hero-card">
+
+        <div class="assistant-icon">
+            🧠
+        </div>
+
+        <h3>
+            Asistente de soporte
+        </h3>
+
+        <p>
+            Motor de decisión basado en
+            una base de conocimiento.
+        </p>
+
+        <div class="status">
+
+            <span></span>
+
+            Sistema disponible
+
+        </div>
+
+    </div>
+
 </section>
-<section class="cards">
-    <div class="card"><strong>{{ total }}</strong><span>Tickets registrados</span></div>
-    <div class="card"><strong>{{ abiertos }}</strong><span>Tickets abiertos</span></div>
-    <div class="card"><strong>24/7</strong><span>Base de conocimiento</span></div>
+
+
+<section class="stats">
+
+    <div class="stat-card">
+
+        <span class="stat-icon">
+            🎫
+        </span>
+
+        <strong>
+            {{ total_tickets }}
+        </strong>
+
+        <p>
+            Tickets registrados
+        </p>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <span class="stat-icon">
+            🔧
+        </span>
+
+        <strong>
+            {{ tickets_abiertos }}
+        </strong>
+
+        <p>
+            Tickets abiertos
+        </p>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <span class="stat-icon">
+            📚
+        </span>
+
+        <strong>
+            {{ soluciones }}
+        </strong>
+
+        <p>
+            Soluciones registradas
+        </p>
+
+    </div>
+
 </section>
+
+
+<section class="features">
+
+    <div class="section-title">
+
+        <span>
+            FUNCIONES
+        </span>
+
+        <h2>
+            Herramientas de soporte
+        </h2>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+        <a
+            href="{{ url_for('diagnostico.iniciar') }}"
+            class="feature-card"
+        >
+
+            <div class="feature-icon">
+                🧠
+            </div>
+
+            <h3>
+                Diagnóstico guiado
+            </h3>
+
+            <p>
+                Responde preguntas y sigue
+                el árbol de decisión.
+            </p>
+
+        </a>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🎫
+            </div>
+
+            <h3>
+                Gestión de tickets
+            </h3>
+
+            <p>
+                Registra y controla las
+                incidencias de soporte.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                📚
+            </div>
+
+            <h3>
+                Base de conocimiento
+            </h3>
+
+            <p>
+                Consulta procedimientos y
+                soluciones técnicas.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
 {% endblock %}

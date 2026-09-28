@@ -1,9 +1,81 @@
 {% extends "base.html" %}
+
+{% block title %}
+Resultado | Mesa de Ayuda TI
+{% endblock %}
+
+
 {% block content %}
-<div class="result">
-    <span class="eyebrow">RESULTADO</span>
-    <h1>Procedimiento recomendado</h1>
-    <p>{{ solucion }}</p>
-    <a class="button" href="{{ url_for('diagnostico.iniciar') }}">Nuevo diagnóstico</a>
+
+<div class="result-container">
+
+    {% if escalar %}
+
+        <div class="result-icon warning">
+            ⚠️
+        </div>
+
+        <span class="badge warning-badge">
+            ESCALAMIENTO
+        </span>
+
+        <h1>
+            Se requiere revisión técnica
+        </h1>
+
+        <p>
+            El sistema no puede completar
+            automáticamente la resolución.
+        </p>
+
+    {% else %}
+
+        <div class="result-icon success">
+            ✓
+        </div>
+
+        <span class="badge success-badge">
+            SOLUCIÓN ENCONTRADA
+        </span>
+
+        <h1>
+            Procedimiento recomendado
+        </h1>
+
+    {% endif %}
+
+
+    <div class="solution-box">
+
+        <h3>
+            Procedimiento
+        </h3>
+
+        <p>
+            {{ solucion }}
+        </p>
+
+    </div>
+
+
+    <div class="result-actions">
+
+        <a
+            href="{{ url_for('diagnostico.iniciar') }}"
+            class="btn-primary"
+        >
+            Nuevo diagnóstico
+        </a>
+
+        <a
+            href="{{ url_for('main.inicio') }}"
+            class="btn-secondary"
+        >
+            Volver al inicio
+        </a>
+
+    </div>
+
 </div>
+
 {% endblock %}
