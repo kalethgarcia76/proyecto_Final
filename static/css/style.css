@@ -891,3 +891,9 @@ footer {
 
 }
 }
+
+/* Acciones del asistente */
+.wizard-actions { margin-top: 24px; display:flex; justify-content:flex-start; }
+.solution-box p { white-space: pre-line; }
+button.answer { width:100%; font:inherit; }
+@media (max-width:800px) { .wizard-actions { justify-content:stretch; } }
