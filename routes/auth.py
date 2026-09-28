@@ -1,8 +1,8 @@
 from datetime import datetime
 
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
-
-from werkzeug.security import check_password_hash\nfrom sqlalchemy import or_
+from sqlalchemy import or_
+from werkzeug.security import check_password_hash
 
 from database.database import db
 from models.usuario import Usuario, RegistroAcceso
@@ -25,7 +25,7 @@ def login():
             return render_template("login.html", usuario=usuario_texto)
 
         usuario = Usuario.query.filter(
-            db.or_(
+            or_(
                 Usuario.usuario == usuario_texto,
                 Usuario.correo == usuario_texto
             )
