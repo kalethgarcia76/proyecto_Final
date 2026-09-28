@@ -2,11 +2,8 @@
 <html lang="es">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>
         {% block title %}
@@ -14,68 +11,64 @@
         {% endblock %}
     </title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/style.css') }}">
-
 </head>
 
 <body>
 
 <header class="topbar">
 
-    <div class="logo">
-
-        <div class="logo-icon">
-            TI
-        </div>
-
+    <a class="logo" href="{{ url_for('main.inicio') }}">
+        <div class="logo-icon">TI</div>
         <div>
             <strong>Mesa de Ayuda</strong>
             <span>Soporte TI</span>
         </div>
-
-    </div>
+    </a>
 
     <nav>
-
-        <a href="{{ url_for('main.inicio') }}">
-            Inicio
-        </a>
-
-        <a href="{{ url_for('diagnostico.iniciar') }}">
-            Diagnóstico
-        </a>
-
-        <a href="{{ url_for('tickets.listar') }}">
-            Tickets
-        </a>
-
-        <a href="{{ url_for('conocimiento.listar') }}">
-            Conocimiento
-        </a>
-
+        <a href="{{ url_for('main.inicio') }}">Inicio</a>
+        <a href="{{ url_for('diagnostico.iniciar') }}">Diagnóstico</a>
+        <a href="{{ url_for('tickets.listar') }}">Tickets</a>
+        <a href="{{ url_for('conocimiento.listar') }}">Conocimiento</a>
     </nav>
+
+    <div class="user-menu">
+        <div class="user-avatar">
+            {{ (session.get('nombre', 'U')[0])|upper }}
+        </div>
+        <div class="user-info">
+            <strong>{{ session.get('nombre', 'Usuario') }}</strong>
+            <span>{{ session.get('rol', 'tecnico')|capitalize }}</span>
+        </div>
+        <a class="logout-link" href="{{ url_for('auth.logout') }}" title="Cerrar sesión">↪</a>
+    </div>
 
 </header>
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="global-flashes">
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
 
 <main>
-
 {% block content %}
-
 {% endblock %}
-
 </main>
 
-
 <footer>
-
-    <p>
-        Mesa de Ayuda y Soporte TI
-    </p>
-
+    <p>Mesa de Ayuda y Soporte TI · Plataforma de diagnóstico y gestión</p>
 </footer>
 
 </body>
-
 </html>
