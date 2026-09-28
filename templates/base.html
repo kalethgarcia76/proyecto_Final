@@ -5,18 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>
-        {% block title %}
-        Mesa de Ayuda TI
-        {% endblock %}
-    </title>
+    <title>{% block title %}Mesa de Ayuda TI{% endblock %}</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
@@ -35,13 +30,14 @@
         <a href="{{ url_for('main.inicio') }}">Inicio</a>
         <a href="{{ url_for('diagnostico.iniciar') }}">Diagnóstico</a>
         <a href="{{ url_for('tickets.listar') }}">Tickets</a>
-        <a href="{{ url_for('conocimiento.listar') }}">Conocimiento</a>\n        {% if session.get("rol") == "administrador" %}\n        <a href="{{ url_for('accesos.listar') }}">Auditoría</a>\n        {% endif %}
+        <a href="{{ url_for('conocimiento.listar') }}">Conocimiento</a>
+        {% if session.get("rol") == "administrador" %}
+        <a href="{{ url_for('accesos.listar') }}">Auditoría</a>
+        {% endif %}
     </nav>
 
     <div class="user-menu">
-        <div class="user-avatar">
-            {{ (session.get('nombre', 'U')[0])|upper }}
-        </div>
+        <div class="user-avatar">{{ (session.get('nombre', 'U')[0])|upper }}</div>
         <div class="user-info">
             <strong>{{ session.get('nombre', 'Usuario') }}</strong>
             <span>{{ session.get('rol', 'tecnico')|capitalize }}</span>
@@ -62,8 +58,7 @@
 {% endwith %}
 
 <main>
-{% block content %}
-{% endblock %}
+{% block content %}{% endblock %}
 </main>
 
 <footer>
