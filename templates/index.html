@@ -1,185 +1,138 @@
 {% extends "base.html" %}
 
-{% block title %}
-Inicio | Mesa de Ayuda TI
-{% endblock %}
-
+{% block title %}Panel principal | Mesa de Ayuda TI{% endblock %}
 
 {% block content %}
 
-<section class="hero">
+<div class="dashboard-page">
 
-    <div>
+    <section class="hero dashboard-hero">
 
-        <span class="badge">
-            SISTEMA DE SOPORTE TI
-        </span>
+        <div class="hero-content">
+            <div class="welcome-line">
+                <span class="live-dot"></span>
+                SISTEMA OPERATIVO
+            </div>
 
-        <h1>
-            Diagnostica y resuelve
-            incidencias de TI
-        </h1>
+            <h1>
+                Hola, {{ session.get('nombre', 'Técnico') }}.
+                <br>
+                <span>¿Qué necesitas resolver hoy?</span>
+            </h1>
 
-        <p>
-            Sistema inteligente de apoyo para técnicos
-            de soporte mediante un árbol de decisión
-            y una base de conocimiento.
-        </p>
+            <p>
+                Centraliza tus diagnósticos, tickets y procedimientos
+                técnicos desde un solo lugar.
+            </p>
 
-        <a
-            href="{{ url_for('diagnostico.iniciar') }}"
-            class="btn-primary"
-        >
-            🧠 Iniciar diagnóstico
-        </a>
+            <div class="hero-actions">
+                <a href="{{ url_for('diagnostico.iniciar') }}" class="btn-primary">
+                    🧠 Iniciar diagnóstico
+                </a>
 
-    </div>
-
-
-    <div class="hero-card">
-
-        <div class="assistant-icon">
-            🧠
+                <a href="{{ url_for('tickets.listar') }}" class="btn-secondary">
+                    🎫 Ver tickets
+                </a>
+            </div>
         </div>
 
-        <h3>
-            Asistente de soporte
-        </h3>
-
-        <p>
-            Analiza los síntomas y guía al técnico
-            hasta encontrar un procedimiento.
-        </p>
-
-        <div class="status">
-            <span></span>
-            Sistema disponible
+        <div class="dashboard-orb">
+            <div class="orb-ring ring-one"></div>
+            <div class="orb-ring ring-two"></div>
+            <div class="orb-core">TI</div>
+            <div class="orb-label">AI<br><small>SUPPORT</small></div>
         </div>
 
-    </div>
+    </section>
 
-</section>
+    <section class="dashboard-stats">
 
-
-<section class="stats">
-
-    <div class="stat-card">
-
-        <span>🎫</span>
-
-        <strong>
-            {{ total_tickets }}
-        </strong>
-
-        <p>
-            Tickets registrados
-        </p>
-
-    </div>
-
-
-    <div class="stat-card">
-
-        <span>🔧</span>
-
-        <strong>
-            {{ tickets_abiertos }}
-        </strong>
-
-        <p>
-            Tickets abiertos
-        </p>
-
-    </div>
-
-
-    <div class="stat-card">
-
-        <span>📚</span>
-
-        <strong>
-            {{ soluciones }}
-        </strong>
-
-        <p>
-            Soluciones
-        </p>
-
-    </div>
-
-</section>
-
-
-<section class="features">
-
-    <h2>
-        Módulos del sistema
-    </h2>
-
-    <div class="feature-grid">
-
-        <a
-            href="{{ url_for('diagnostico.iniciar') }}"
-            class="feature-card"
-        >
-
-            <div>
-                🧠
+        <div class="modern-stat blue-stat">
+            <div class="stat-top">
+                <span class="stat-icon">🎫</span>
+                <span class="stat-label">TICKETS</span>
             </div>
+            <strong>{{ total_tickets }}</strong>
+            <p>Total registrados</p>
+        </div>
 
-            <h3>
-                Diagnóstico
-            </h3>
+        <div class="modern-stat orange-stat">
+            <div class="stat-top">
+                <span class="stat-icon">⚡</span>
+                <span class="stat-label">PENDIENTES</span>
+            </div>
+            <strong>{{ tickets_abiertos }}</strong>
+            <p>Requieren atención</p>
+        </div>
 
-            <p>
-                Árbol de decisión para identificar
-                incidencias.
-            </p>
+        <div class="modern-stat green-stat">
+            <div class="stat-top">
+                <span class="stat-icon">✓</span>
+                <span class="stat-label">CONOCIMIENTO</span>
+            </div>
+            <strong>{{ soluciones }}</strong>
+            <p>Procedimientos disponibles</p>
+        </div>
 
+    </section>
+
+    <section class="dashboard-section-header">
+        <div>
+            <span class="section-kicker">CENTRO DE OPERACIONES</span>
+            <h2>Herramientas de soporte</h2>
+        </div>
+        <p>Accede rápidamente a las funciones principales.</p>
+    </section>
+
+    <section class="modern-module-grid">
+
+        <a href="{{ url_for('diagnostico.iniciar') }}" class="modern-module module-main">
+            <div class="module-icon">🧠</div>
+            <div class="module-body">
+                <span class="module-tag">ASISTENTE INTELIGENTE</span>
+                <h3>Diagnóstico guiado</h3>
+                <p>
+                    Responde preguntas paso a paso y obtén procedimientos
+                    para resolver incidencias de infraestructura y redes.
+                </p>
+                <span class="module-link">Abrir asistente →</span>
+            </div>
         </a>
 
-
-        <a
-            href="{{ url_for('tickets.listar') }}"
-            class="feature-card"
-        >
-
-            <div>
-                🎫
+        <a href="{{ url_for('tickets.listar') }}" class="modern-module">
+            <div class="module-icon">🎫</div>
+            <div class="module-body">
+                <span class="module-tag">GESTIÓN</span>
+                <h3>Tickets</h3>
+                <p>Registra, consulta y da seguimiento a las solicitudes.</p>
+                <span class="module-link">Gestionar →</span>
             </div>
-
-            <h3>
-                Tickets
-            </h3>
-
-            <p>
-                Registrar y consultar solicitudes.
-            </p>
-
         </a>
 
-
-        <a
-            href="{{ url_for('conocimiento.listar') }}"
-            class="feature-card"
-        >
-
-            <div>
-                📚
+        <a href="{{ url_for('conocimiento.listar') }}" class="modern-module">
+            <div class="module-icon">📚</div>
+            <div class="module-body">
+                <span class="module-tag">RECURSOS</span>
+                <h3>Base de conocimiento</h3>
+                <p>Consulta soluciones y procedimientos técnicos.</p>
+                <span class="module-link">Explorar →</span>
             </div>
-
-            <h3>
-                Conocimiento
-            </h3>
-
-            <p>
-                Procedimientos y soluciones técnicas.
-            </p>
-
         </a>
 
-    </div>
+        {% if session.get("rol") == "administrador" %}
+        <a href="{{ url_for('accesos.listar') }}" class="modern-module">
+            <div class="module-icon">🛡️</div>
+            <div class="module-body">
+                <span class="module-tag">ADMINISTRACIÓN</span>
+                <h3>Auditoría</h3>
+                <p>Consulta los accesos registrados en el sistema.</p>
+                <span class="module-link">Ver registros →</span>
+            </div>
+        </a>
+        {% endif %}
 
-</section>
+    </section>
+
+</div>
 
 {% endblock %}
